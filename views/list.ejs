@@ -7,6 +7,19 @@
   <title>To do list</title>
 </head>
 <body>
-  <h1>Today is a <%=kindOfDay%>!!</h1>
+  <h1><%= kindOfDay %></h1>
+
+  <ul>
+    
+    <% for(var i=0; i< newChore.length; i++){ %>
+      <li><%= newChore[i] %></li>
+    <% } %>
+  </ul>
+
+  <form action="/" method="post">
+    <input type="text" name="chore" placeholder="Add a new activity">
+    <button type="submit">Add</button>
+  </form>
+  
 </body>
 </html>
