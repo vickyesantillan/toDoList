@@ -1,22 +1,22 @@
 const express = require('express');
 const app = express();
-var chores = ['Buy food', 'Cook Food', 'Eat Food'];
+let chores = ['Buy food', 'Cook Food', 'Eat Food'];
 
 app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
-  var today = new Date();
-  var currentDay = today.getDate();
+  let today = new Date();
+  let currentDay = today.getDate();
 
-  var options = {
+  let options = {
     weekday: 'long',
     day: 'numeric',
     month: 'long'
   };
 
-  var day = today.toLocaleDateString('en-US', options);
+  let day = today.toLocaleDateString('en-US', options);
 
   // switch (currentDay) {
   //   case 0:
@@ -50,7 +50,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/', function (req, res) {
-  var chore = req.body.chore;
+  let chore = req.body.chore;
   chores.push(chore);
   res.redirect('/');
 });
