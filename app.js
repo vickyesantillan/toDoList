@@ -1,10 +1,17 @@
 const express = require('express');
 const app = express();
-let chores = ['Buy food', 'Cook Food', 'Eat Food'];
+// const bodyParser = require('body-parser');
+// const multer = require('multer'); // v1.0.5
+// const upload = multer();
+let items = ['Buy food', 'Cook Food', 'Eat Food'];
+let workItems = [];
 
 app.set('view engine', 'ejs');
+// app.use(bodyParser.json()); // for parsing application/json
+// app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.use(express.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
@@ -48,13 +55,29 @@ app.get('/', function (req, res) {
   //     break;
   // }
 
-  res.render('list', { kindOfDay: day, newChore: chores });
+  res.render('list', { listTitle: day, newItem: items });
 });
 
 app.post('/', function (req, res) {
-  let chore = req.body.chore;
-  chores.push(chore);
-  res.redirect('/');
+  let item = req.body.item;
+
+  if (req.body.list === 'Work List') {
+    workItems.push(item);
+    res.redirect('/work');
+  } else {
+    items.push(item);
+    res.redirect('/');
+  }
+});
+
+app.get('/work', function (req, res) {
+  res.render('list', { listTitle: 'Work List', newItem: workItems });
+});
+
+app.post('/work', function (req, res) {
+  let item = req.body.newItem;
+  workItems.push(item);
+  res.redirect('work');
 });
 
 app.listen(3000, function () {
